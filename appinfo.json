@@ -1,0 +1,23 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "Calexo",
+    "longName": "OrangeWF",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "shortName": "OrangeWF",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "569170a4-2655-4a39-8b40-322d049b5238",
+    "versionCode": 1,
+    "versionLabel": "0.1",
+    "watchapp": {
+        "watchface": true
+    }
+}
