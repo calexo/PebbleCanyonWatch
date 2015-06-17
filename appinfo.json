@@ -9,19 +9,14 @@
     "resources": {
         "media": [
             {
+                "file": "images/Canyon-Org-28.png",
+                "menuIcon": true,
+                "name": "ICO_LOGO_CANYON_28",
+                "type": "png"
+            },
+            {
                 "file": "images/CanyonBicycles-PbOrange-140x20.png",
                 "name": "IMG_LOGO_CANYON_140x20",
-                "type": "png"
-            },
-            {
-                "file": "images/OrangeWF.png",
-                "name": "WF_BIG",
-                "type": "png"
-            },
-            {
-                "file": "images/OrangeWF-28.png",
-                "menuIcon": true,
-                "name": "WF_28",
                 "type": "png"
             }
         ]
