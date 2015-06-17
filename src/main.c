@@ -4,6 +4,7 @@ static Window *s_main_window;
 static TextLayer *s_time_layer;
 static TextLayer *s_time_m_layer;
 static TextLayer *s_date_layer;
+static TextLayer *s_date_bold_layer;
 
 
 static void update_time() {
@@ -14,7 +15,8 @@ static void update_time() {
   // Create a long-lived buffer
   static char buffer[] = "00:";
   static char bufferm[] = "00:";
-  static char bufferd[] = "XXX 00 / 00";
+  static char bufferd[] = "XXX 00   /00";
+  static char bufferd2[] = "00";
 
   // Write the current hours and minutes into the buffer
   if(clock_is_24h_style() == true) {
@@ -27,12 +29,14 @@ static void update_time() {
   
   strftime(bufferm, sizeof("00"), "%M", tick_time);
   
-  strftime(bufferd, sizeof("XXX 00 / 00"), "%a %d / %m", tick_time);
+  strftime(bufferd, sizeof("XXX 00   /00"), "%a      /%m", tick_time);
+  strftime(bufferd2, sizeof("00"), "%d", tick_time);
 
   // Display this time on the TextLayer
   text_layer_set_text(s_time_layer, buffer);
   text_layer_set_text(s_time_m_layer, bufferm);
   text_layer_set_text(s_date_layer, bufferd);
+  text_layer_set_text(s_date_bold_layer, bufferd2);
 }
 
 static void main_window_load(Window *window) {
@@ -64,21 +68,26 @@ static void main_window_load(Window *window) {
   
   // DATE
   
-  s_date_layer = text_layer_create(GRect(0, 140, bounds.size.w, 50));
+  s_date_layer = text_layer_create(GRect(20, 140, bounds.size.w, 50));
   text_layer_set_background_color(s_date_layer, GColorBlack);
   text_layer_set_text_color(s_date_layer, GColorOrange);
-  text_layer_set_text(s_date_layer, "XXX 00 / 00");
-
-  // Improve the layout to be more like a watchface
   text_layer_set_font(s_date_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
-  text_layer_set_text_alignment(s_date_layer, GTextAlignmentRight);
+  text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
 
+  s_date_bold_layer = text_layer_create(GRect(20+62, 140, 20, 50));
+  text_layer_set_background_color(s_date_bold_layer, GColorBlack);
+  text_layer_set_text_color(s_date_bold_layer, GColorOrange);
+  text_layer_set_font(s_date_bold_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
+  text_layer_set_text_alignment(s_date_bold_layer, GTextAlignmentCenter);
+
+  
+  
   // Add it as a child layer to the Window's root layer
   layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_time_m_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_date_layer));
-  //graphics_draw_text(s_time_layer, "00 / 00", FONT_KEY_BITHAM_18_LIGHT_SUBSET, GRect(10, 55, 244, 50), GTextOverflowModeTrailingEllipsis, GTextAlignmentRight, NULL);
-
+  layer_add_child(window_layer, text_layer_get_layer(s_date_bold_layer));
+  
   
   // Make sure the time is displayed from the start
   update_time();
