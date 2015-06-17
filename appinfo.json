@@ -7,7 +7,19 @@
     "longName": "OrangeWF",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/OrangeWF-28.png",
+                "menuIcon": true,
+                "name": "WF_28",
+                "type": "png"
+            },
+            {
+                "file": "images/OrangeWF.png",
+                "name": "WF_BIG",
+                "type": "png"
+            }
+        ]
     },
     "sdkVersion": "3",
     "shortName": "OrangeWF",
@@ -15,7 +27,6 @@
         "basalt"
     ],
     "uuid": "569170a4-2655-4a39-8b40-322d049b5238",
-    "versionCode": 1,
     "versionLabel": "0.1",
     "watchapp": {
         "watchface": true
