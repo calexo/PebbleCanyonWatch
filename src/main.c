@@ -5,7 +5,11 @@ static TextLayer *s_time_layer;
 static TextLayer *s_time_m_layer;
 static TextLayer *s_date_layer;
 static TextLayer *s_date_bold_layer;
+static TextLayer *s_connection_layer;
 
+static void handle_bluetooth(bool connected) {
+  text_layer_set_text(s_connection_layer, connected ? " " : "!");
+}
 
 static void update_time() {
   // Get a tm structure
@@ -37,6 +41,8 @@ static void update_time() {
   text_layer_set_text(s_time_m_layer, bufferm);
   text_layer_set_text(s_date_layer, bufferd);
   text_layer_set_text(s_date_bold_layer, bufferd2);
+  
+  handle_bluetooth(bluetooth_connection_service_peek());
 }
 
 static void main_window_load(Window *window) {
@@ -81,12 +87,19 @@ static void main_window_load(Window *window) {
   text_layer_set_text_alignment(s_date_bold_layer, GTextAlignmentCenter);
 
   
+  // BT
+  s_connection_layer = text_layer_create(GRect(0, 140, 20, 50));
+  text_layer_set_background_color(s_connection_layer, GColorBlack);
+  text_layer_set_text_color(s_connection_layer, GColorOrange);
+  text_layer_set_font(s_connection_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
+  text_layer_set_text_alignment(s_connection_layer, GTextAlignmentCenter);
   
   // Add it as a child layer to the Window's root layer
   layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_time_m_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_date_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_date_bold_layer));
+  layer_add_child(window_layer, text_layer_get_layer(s_connection_layer));
   
   
   // Make sure the time is displayed from the start
@@ -103,6 +116,8 @@ static void main_window_unload(Window *window) {
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time();
 }
+
+
   
 static void init() {
   // Create main Window element and assign to pointer
@@ -121,6 +136,8 @@ static void init() {
   
   // Register with TickTimerService
   tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+  
+  bluetooth_connection_service_subscribe(handle_bluetooth);
 }
 
 static void deinit() {
