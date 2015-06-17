@@ -4,29 +4,34 @@
         ""
     ],
     "companyName": "Calexo",
-    "longName": "OrangeWF",
+    "longName": "CanyonWatch",
     "projectType": "native",
     "resources": {
         "media": [
             {
-                "file": "images/OrangeWF-28.png",
-                "menuIcon": true,
-                "name": "WF_28",
+                "file": "images/CanyonBicycles-PbOrange-140x20.png",
+                "name": "IMG_LOGO_CANYON_140x20",
                 "type": "png"
             },
             {
                 "file": "images/OrangeWF.png",
                 "name": "WF_BIG",
                 "type": "png"
+            },
+            {
+                "file": "images/OrangeWF-28.png",
+                "menuIcon": true,
+                "name": "WF_28",
+                "type": "png"
             }
         ]
     },
     "sdkVersion": "3",
-    "shortName": "OrangeWF",
+    "shortName": "CanyonWatch",
     "targetPlatforms": [
         "basalt"
     ],
-    "uuid": "569170a4-2655-4a39-8b40-322d049b5238",
+    "uuid": "5BBAE00B-1508-45C2-8988-82254279D6D8",
     "versionLabel": "0.1",
     "watchapp": {
         "watchface": true

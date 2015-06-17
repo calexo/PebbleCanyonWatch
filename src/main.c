@@ -6,6 +6,9 @@ static TextLayer *s_time_m_layer;
 static TextLayer *s_date_layer;
 static TextLayer *s_date_bold_layer;
 static TextLayer *s_connection_layer;
+static GBitmap *s_canyon_bitmap;
+static BitmapLayer *s_bitmap_layer;
+
 
 static void handle_bluetooth(bool connected) {
   text_layer_set_text(s_connection_layer, connected ? " " : "!");
@@ -94,12 +97,18 @@ static void main_window_load(Window *window) {
   text_layer_set_font(s_connection_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
   text_layer_set_text_alignment(s_connection_layer, GTextAlignmentCenter);
   
+  // BITMAP
+  s_canyon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMG_LOGO_CANYON_140x20);
+  s_bitmap_layer = bitmap_layer_create(GRect(2, 20, 140, 20));
+  bitmap_layer_set_bitmap(s_bitmap_layer, s_canyon_bitmap);
+  
   // Add it as a child layer to the Window's root layer
   layer_add_child(window_layer, text_layer_get_layer(s_time_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_time_m_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_date_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_date_bold_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_connection_layer));
+  layer_add_child(window_layer, bitmap_layer_get_layer(s_bitmap_layer));
   
   
   // Make sure the time is displayed from the start
@@ -111,6 +120,8 @@ static void main_window_unload(Window *window) {
   text_layer_destroy(s_time_layer);
   text_layer_destroy(s_time_m_layer);
   text_layer_destroy(s_date_layer);
+  gbitmap_destroy(s_canyon_bitmap);
+  bitmap_layer_destroy(s_bitmap_layer);
 }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
@@ -138,6 +149,8 @@ static void init() {
   tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
   
   bluetooth_connection_service_subscribe(handle_bluetooth);
+  
+
 }
 
 static void deinit() {
